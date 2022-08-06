@@ -1,0 +1,41 @@
+@options
+@packages
+@argfile
+-encoding
+'UTF-8'
+-protected
+-source
+'1.8'
+-sourcepath
+'C:/intellij-workspace/face-detection/app/src/main/java'
+-author
+-bottom
+'Copyright &#169; 2022. All rights reserved.'
+-charset
+'UTF-8'
+-d
+'C:/intellij-workspace/face-detection/app/doc/javadoc'
+-docencoding
+'UTF-8'
+-doctitle
+'app 0.0.0+0.1 API'
+-linkoffline
+'https://docs.oracle.com/javase/8/docs/api' 'C:/intellij-workspace/face-detection/app/target/javadoc-bundle-options'
+-use
+-windowtitle
+'app 0.0.0+0.1 API'
+com.boluclac.facedetection
+'C:/intellij-workspace/face-detection/app/src/main/java/com/boluclac/facedetection/App.java'
+'C:/intellij-workspace/face-detection/app/src/main/java/com/boluclac/facedetection/package-info.java'
+C:\intellij-workspace\face-detection\app\src\main\java = 1659410401207
+C:\intellij-workspace\face-detection\app\doc\javadoc\allclasses-frame.html = 1659410948350
+C:\intellij-workspace\face-detection\app\doc\javadoc\allclasses-noframe.html = 1659410948352
+C:\intellij-workspace\face-detection\app\doc\javadoc\constant-values.html = 1659410948324
+C:\intellij-workspace\face-detection\app\doc\javadoc\deprecated-list.html = 1659410948349
+C:\intellij-workspace\face-detection\app\doc\javadoc\help-doc.html = 1659410948357
+C:\intellij-workspace\face-detection\app\doc\javadoc\index-all.html = 1659410948345
+C:\intellij-workspace\face-detection\app\doc\javadoc\index.html = 1659410948354
+C:\intellij-workspace\face-detection\app\doc\javadoc\overview-tree.html = 1659410948342
+C:\intellij-workspace\face-detection\app\doc\javadoc\package-list = 1659410948299
+C:\intellij-workspace\face-detection\app\doc\javadoc\script.js = 1659410948361
+C:\intellij-workspace\face-detection\app\doc\javadoc\stylesheet.css = 1659410948360

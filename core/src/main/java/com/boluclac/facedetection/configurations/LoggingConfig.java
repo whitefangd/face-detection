@@ -1,6 +1,8 @@
 package com.boluclac.facedetection.configurations;
 
 import ch.qos.logback.classic.util.ContextInitializer;
+import com.boluclac.facedetection.common.constants.ConfigConstant;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 
@@ -13,11 +15,18 @@ import org.springframework.context.annotation.Configuration;
  */
 @Configuration
 public class LoggingConfig {
+
+    /**
+     * Log file
+     */
+    @Value("${" + ConfigConstant.CONFIG_LOG_FILE + "}")
+    private String logFile;
+
     /**
      * Log config
      */
     @Bean
     public void logConfig() {
-        System.setProperty(ContextInitializer.CONFIG_FILE_PROPERTY, "config/logback.xml");
+        System.setProperty(ContextInitializer.CONFIG_FILE_PROPERTY, logFile);
     }
 }

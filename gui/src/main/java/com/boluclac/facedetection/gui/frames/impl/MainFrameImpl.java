@@ -1,15 +1,13 @@
 package com.boluclac.facedetection.gui.frames.impl;
 
 import com.boluclac.facedetection.annotations.FrameComponent;
-import com.boluclac.facedetection.common.MessageSourceCommon;
+import com.boluclac.facedetection.common.beans.MessageSourceCommon;
 import com.boluclac.facedetection.gui.events.face.ExitFrameEvent;
 import com.boluclac.facedetection.gui.frames.face.MainFrame;
 import org.springframework.beans.factory.annotation.Autowired;
 
 import javax.swing.*;
 import java.awt.*;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
 import java.awt.event.WindowEvent;
 import java.util.ArrayList;
 import java.util.List;
@@ -72,19 +70,6 @@ public class MainFrameImpl extends BaseFrame implements MainFrame {
         JPanel mainPanel = new JPanel();
         this.add(mainPanel);
         mainPanel.setLayout(new BorderLayout());
-        JButton button = new JButton();
-        mainPanel.add(button, BorderLayout.CENTER);
-        button.setText("Change locale");
-
-        button.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                Locale locale = new Locale("vi", "VN");
-                messageSourceCommon.setLocale(locale);
-                afterLocaleSet(locale);
-            }
-        });
-
     }
 
     /**

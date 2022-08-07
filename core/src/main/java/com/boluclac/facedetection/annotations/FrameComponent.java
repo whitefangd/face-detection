@@ -18,8 +18,8 @@ import java.lang.annotation.*;
 @Documented
 @Component
 public @interface FrameComponent {
-    @AliasFor(annotation = Component.class)
-
-    /** Default value: "" */
+    @AliasFor(
+            annotation = Component.class
+    )
     String value() default "";
 }

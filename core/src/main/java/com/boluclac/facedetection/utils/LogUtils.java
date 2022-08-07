@@ -14,7 +14,7 @@ public class LogUtils {
     /**
      * Logger
      */
-    private static Logger LOGGER = null;// LoggerFactory.getLogger(LogUtils.class);
+    private static Logger LOGGER = null;
 
     /**
      * Debug logging
@@ -22,11 +22,17 @@ public class LogUtils {
      * @param message message
      */
     public static void debug(String message) {
-        // if (getLogger().isDebugEnabled()) {
+        if (getLogger().isDebugEnabled()) {
             getLogger().debug(message);
-        //}
+        }
     }
 
+    /**
+     * get Logger. It is always not NULL.<br>
+     * singleton object
+     *
+     * @return Logger;
+     */
     private static Logger getLogger() {
         if (LOGGER == null) {
             LOGGER = LoggerFactory.getLogger(Logger.ROOT_LOGGER_NAME);

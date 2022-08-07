@@ -1,7 +1,10 @@
 package com.boluclac.facedetection.gui.frames.impl;
 
+import com.boluclac.facedetection.ConfigurationCore;
 import com.boluclac.facedetection.annotations.FrameComponent;
 import com.boluclac.facedetection.common.beans.MessageSourceCommon;
+import com.boluclac.facedetection.gui.controls.face.MainMenuControl;
+import com.boluclac.facedetection.gui.controls.impl.MainMenuControlImpl;
 import com.boluclac.facedetection.gui.events.face.ExitFrameEvent;
 import com.boluclac.facedetection.gui.frames.face.MainFrame;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -28,6 +31,16 @@ public class MainFrameImpl extends BaseFrame implements MainFrame {
      */
     @Autowired
     private MessageSourceCommon messageSourceCommon;
+
+    /**
+     * Menu training
+     */
+    private JMenu trainingMenu;
+    /**
+     * Home training
+     */
+    private JMenu fileMenu;
+
     /**
      * Event list: Exit frame
      */
@@ -70,6 +83,21 @@ public class MainFrameImpl extends BaseFrame implements MainFrame {
         JPanel mainPanel = new JPanel();
         this.add(mainPanel);
         mainPanel.setLayout(new BorderLayout());
+        /* ************************************************** */
+        /* Main menu
+        /* ************************************************** */
+        JMenuBar menuBar = (JMenuBar) ConfigurationCore.getBean(MainMenuControl.class);
+        this.setJMenuBar(menuBar);
+        /* ************************************************** */
+        /* Home menu
+        /* ************************************************** */
+        fileMenu = new JMenu();
+        menuBar.add(fileMenu, 0);
+        /* ************************************************** */
+        /* Training menu
+        /* ************************************************** */
+        trainingMenu = new JMenu();
+        menuBar.add(trainingMenu, 1);
     }
 
     /**
@@ -80,6 +108,8 @@ public class MainFrameImpl extends BaseFrame implements MainFrame {
      */
     protected void afterLocaleSet(Locale locale) {
         this.setTitle(messageSourceCommon.getMessage("title", locale));
+        fileMenu.setText(messageSourceCommon.getMessage("menu.file", locale));
+        trainingMenu.setText(messageSourceCommon.getMessage("menu.training", locale));
     }
 
     /**

@@ -4,7 +4,7 @@ import com.boluclac.facedetection.gui.events.face.ExitFrameEvent;
 
 /**
  * <h1>Main Frame Interface</h1>
- * Design base layout, structure frame.
+ * Design main layout, structure frame.
  *
  * @author boluclac
  * @version 0.0.0

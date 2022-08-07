@@ -36,11 +36,11 @@ public class ConfigurationCore {
      */
     public static void config() {
         AnnotationConfigApplicationContext configuration = new AnnotationConfigApplicationContext();
+        ConfigurationCore.applicationContext = configuration;
         configuration.register(LoggingConfig.class);
         configuration.register(ConfigurationCore.class);
         configuration.register(ApplicationConfig.class);
         configuration.refresh();
-        ConfigurationCore.applicationContext = configuration;
 
         String[] beanDefinitionNames = applicationContext.getBeanDefinitionNames();
         for (String beanDefinitionName : beanDefinitionNames) {

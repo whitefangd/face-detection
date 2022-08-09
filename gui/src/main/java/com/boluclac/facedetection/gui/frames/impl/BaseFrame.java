@@ -28,13 +28,12 @@ public abstract class BaseFrame extends JFrame implements WindowListener {
         afterCreateInit();
     }
 
-
     /**
      * <h2>Initialize Graphic Design </h2>
      * Initialize graphic user interface<br>
      * Flow process init frame:
      * <ol>
-     *     <li>{@link #graphicDesignInit}: Initialize Graphic Design</li>
+     *     <li>{@literal graphicDesignInit}: Initialize Graphic Design</li>
      *     <li>{@link #afterLocaleSet}: Locale change</li>
      *     <li>{@link #afterCreateInit}: Process after create</li>
      * </ol>
@@ -49,7 +48,7 @@ public abstract class BaseFrame extends JFrame implements WindowListener {
      * Flow process init frame:
      * <ol>
      *     <li>{@link #graphicDesignInit}: Initialize Graphic Design</li>
-     *     <li>{@link #afterLocaleSet}: Locale change</li>
+     *     <li>{@literal afterLocaleSet}: Locale change</li>
      *     <li>{@link #afterCreateInit}: Process after create</li>
      * </ol>
      *
@@ -65,7 +64,7 @@ public abstract class BaseFrame extends JFrame implements WindowListener {
      * <ol>
      *     <li>{@link #graphicDesignInit}: Initialize Graphic Design</li>
      *     <li>{@link #afterLocaleSet}: Locale change</li>
-     *     <li>{@link #afterCreateInit}: Process after create</li>
+     *     <li>{@literal afterCreateInit}: Process after create</li>
      * </ol>
      *
      * @apiNote This is abstract  function, required implement when extend

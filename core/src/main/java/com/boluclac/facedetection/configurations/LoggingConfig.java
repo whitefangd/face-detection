@@ -16,9 +16,7 @@ import org.springframework.context.annotation.Configuration;
 @Configuration
 public class LoggingConfig {
 
-    /**
-     * Log file
-     */
+    /** Log file */
     @Value("${" + ConfigConstant.CONFIG_LOG_FILE + "}")
     private String logFile;
 

@@ -11,9 +11,8 @@ import org.slf4j.LoggerFactory;
  * @version 0.0.0
  */
 public class LogUtils {
-    /**
-     * Logger
-     */
+
+    /** Logger */
     private static Logger LOGGER = null;
 
     /**

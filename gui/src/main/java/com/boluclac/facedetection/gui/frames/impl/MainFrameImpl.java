@@ -4,13 +4,13 @@ import com.boluclac.facedetection.ConfigurationCore;
 import com.boluclac.facedetection.annotations.FrameComponent;
 import com.boluclac.facedetection.common.beans.MessageSourceCommon;
 import com.boluclac.facedetection.gui.controls.face.MainMenuControl;
-import com.boluclac.facedetection.gui.controls.impl.MainMenuControlImpl;
 import com.boluclac.facedetection.gui.events.face.ExitFrameEvent;
 import com.boluclac.facedetection.gui.frames.face.MainFrame;
 import org.springframework.beans.factory.annotation.Autowired;
 
-import javax.swing.*;
-import java.awt.*;
+import javax.swing.JFrame;
+import javax.swing.JPanel;
+import java.awt.BorderLayout;
 import java.awt.event.WindowEvent;
 import java.util.ArrayList;
 import java.util.List;
@@ -26,24 +26,10 @@ import java.util.Locale;
 @FrameComponent
 public class MainFrameImpl extends BaseFrame implements MainFrame {
 
-    /**
-     * Message resources Common
-     */
+    /** Message resources Common */
     @Autowired
     private MessageSourceCommon messageSourceCommon;
-
-    /**
-     * Menu training
-     */
-    private JMenu trainingMenu;
-    /**
-     * Home training
-     */
-    private JMenu fileMenu;
-
-    /**
-     * Event list: Exit frame
-     */
+    /** Event list: Exit frame */
     private final List<ExitFrameEvent> exitFrameEvents = new ArrayList<>();
 
     /**
@@ -86,18 +72,9 @@ public class MainFrameImpl extends BaseFrame implements MainFrame {
         /* ************************************************** */
         /* Main menu
         /* ************************************************** */
-        JMenuBar menuBar = (JMenuBar) ConfigurationCore.getBean(MainMenuControl.class);
-        this.setJMenuBar(menuBar);
-        /* ************************************************** */
-        /* Home menu
-        /* ************************************************** */
-        fileMenu = new JMenu();
-        menuBar.add(fileMenu, 0);
-        /* ************************************************** */
-        /* Training menu
-        /* ************************************************** */
-        trainingMenu = new JMenu();
-        menuBar.add(trainingMenu, 1);
+        MainMenuControl menuBar = ConfigurationCore.getBean(MainMenuControl.class);
+        assert menuBar != null;
+        this.setJMenuBar(menuBar.getInstance());
     }
 
     /**
@@ -108,8 +85,6 @@ public class MainFrameImpl extends BaseFrame implements MainFrame {
      */
     protected void afterLocaleSet(Locale locale) {
         this.setTitle(messageSourceCommon.getMessage("title", locale));
-        fileMenu.setText(messageSourceCommon.getMessage("menu.file", locale));
-        trainingMenu.setText(messageSourceCommon.getMessage("menu.training", locale));
     }
 
     /**
@@ -167,12 +142,4 @@ public class MainFrameImpl extends BaseFrame implements MainFrame {
         exitFrameEvents.clear();
     }
 
-    /**
-     * <h2>Set Message resources Common</h2>
-     *
-     * @param messageSourceCommon Message resources Common
-     */
-    public void setMessageSourceCommon(MessageSourceCommon messageSourceCommon) {
-        this.messageSourceCommon = messageSourceCommon;
-    }
 }

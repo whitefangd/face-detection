@@ -36,8 +36,6 @@ public interface MainFrame {
     /**
      * <h2>Clear Event: Exit frame</h2>
      * Event is triggered when close frame completed
-     *
-     * @param event Edit frame event
      */
     void clearExitFrameEventListener();
 }

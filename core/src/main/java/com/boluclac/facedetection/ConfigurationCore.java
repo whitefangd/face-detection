@@ -20,9 +20,7 @@ import org.springframework.context.annotation.*;
 })
 public class ConfigurationCore {
 
-    /**
-     * Application context
-     */
+    /** Application context */
     private static ApplicationContext applicationContext;
 
     /**
@@ -54,6 +52,7 @@ public class ConfigurationCore {
      *
      * @param clazz Class object
      * @param <T>   Class type template
+     *
      * @return bean object
      */
     public static <T> T getBean(Class<T> clazz) {

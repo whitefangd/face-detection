@@ -1,5 +1,6 @@
 package com.boluclac.facedetection.common.beans;
 
+import java.util.List;
 import java.util.Locale;
 
 /**
@@ -25,4 +26,17 @@ public interface MessageSourceCommon {
      * @param locale Locale
      */
     void setLocale(Locale locale);
+
+    /**
+     * get default locale
+     *
+     * @return locale
+     */
+    Locale getLocale();
+
+    /**
+     * get list locales
+     * @return locales
+     */
+    List<Locale> getLocales();
 }

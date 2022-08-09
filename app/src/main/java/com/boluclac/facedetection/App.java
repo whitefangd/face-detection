@@ -13,9 +13,7 @@ import com.boluclac.facedetection.gui.frames.face.MainFrame;
  */
 public class App implements ExitFrameEvent {
 
-    /**
-     * Instance.
-     */
+    /** Instance. */
     private static App instance = null;
 
     /**

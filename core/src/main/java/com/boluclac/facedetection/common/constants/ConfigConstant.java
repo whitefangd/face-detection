@@ -8,13 +8,10 @@ package com.boluclac.facedetection.common.constants;
  * @version 0.0.0
  */
 public class ConfigConstant {
-    /**
-     * Config key: "config.logfile"
-     */
+    /** Config key: "config.logfile" */
     public static final String CONFIG_LOG_FILE = "config.logfile";
-
-    /**
-     * Config key: "config.message.basename"
-     */
+    /** Config key: "config.message.basename" */
     public static final String CONFIG_MSG_BASENAME = "config.message.basename";
+    /** Config key: "config.message.locales" */
+    public static final String CONFIG_MSG_LOCALES = "config.message.locales";
 }

@@ -1,12 +1,16 @@
 package com.boluclac.facedetection.common.beans;
 
 import com.boluclac.facedetection.common.constants.ConfigConstant;
+import com.boluclac.facedetection.common.constants.MessageConstant;
+import com.boluclac.facedetection.utils.StringUtils;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.support.ReloadableResourceBundleMessageSource;
 import org.springframework.stereotype.Component;
 
 import javax.annotation.PostConstruct;
 import java.nio.charset.StandardCharsets;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Locale;
 
 /**
@@ -19,11 +23,15 @@ import java.util.Locale;
 @Component
 public class MessageSourceCommonImpl extends ReloadableResourceBundleMessageSource implements MessageSourceCommon {
 
-    /**
-     * Message base name
-     */
+    /** Message base name */
     @Value("${" + ConfigConstant.CONFIG_MSG_BASENAME + "}")
     private String baseName;
+    /** List locales */
+    @Value("${" + ConfigConstant.CONFIG_MSG_LOCALES + "}")
+    private List<String> localeNames;
+
+    /** List locale names */
+    private List<Locale> locales;
 
     /**
      * Init load message properties.<br>
@@ -41,6 +49,7 @@ public class MessageSourceCommonImpl extends ReloadableResourceBundleMessageSour
      *
      * @param code   message code is defined in properties
      * @param locale Locale
+     *
      * @return Message text
      */
     @Override
@@ -56,5 +65,47 @@ public class MessageSourceCommonImpl extends ReloadableResourceBundleMessageSour
     @Override
     public void setLocale(Locale locale) {
         super.setDefaultLocale(locale);
+    }
+
+    /**
+     * get default locale
+     *
+     * @return locale
+     */
+    @Override
+    public Locale getLocale() {
+        return super.getDefaultLocale();
+    }
+
+    /**
+     * get list locales
+     *
+     * @return locales
+     */
+    @Override
+    public List<Locale> getLocales() {
+        if (locales == null) {
+            assert localeNames != null;
+            locales = new ArrayList<>();
+            for (String localeName : localeNames) {
+                assert StringUtils.isNotNullAndEMpty(localeName);
+                Locale locale = new Locale(localeName);
+                locales.add(locale);
+            }
+        }
+        return locales;
+    }
+
+    /**
+     * get list locales
+     *
+     * @return locale
+     */
+    public String getLocaleName(String locale) {
+        assert localeNames != null;
+        if (localeNames.contains(locale)) {
+            return MessageConstant.MESSAGE_LANGUAGE + locale;
+        }
+        return "";
     }
 }

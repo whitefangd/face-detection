@@ -39,4 +39,11 @@ public interface MessageSourceCommon {
      * @return locales
      */
     List<Locale> getLocales();
+
+    /**
+     * get list locales
+     *
+     * @return locale
+     */
+    String getLocaleName(String locale);
 }

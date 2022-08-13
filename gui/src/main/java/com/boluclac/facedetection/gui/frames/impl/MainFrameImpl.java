@@ -4,7 +4,10 @@ import com.boluclac.facedetection.ConfigurationCore;
 import com.boluclac.facedetection.annotations.FrameComponent;
 import com.boluclac.facedetection.common.beans.MessageSourceCommon;
 import com.boluclac.facedetection.gui.controls.face.MainMenuControl;
+import com.boluclac.facedetection.gui.controls.face.TrainingPageControl;
+import com.boluclac.facedetection.gui.events.ActionCommands;
 import com.boluclac.facedetection.gui.events.face.ExitFrameEvent;
+import com.boluclac.facedetection.gui.events.face.MenuActionEvent;
 import com.boluclac.facedetection.gui.frames.face.MainFrame;
 import org.springframework.beans.factory.annotation.Autowired;
 
@@ -24,13 +27,16 @@ import java.util.Locale;
  * @version 0.0.0
  */
 @FrameComponent
-public class MainFrameImpl extends BaseFrame implements MainFrame {
+public class MainFrameImpl extends BaseFrame implements MainFrame, MenuActionEvent {
 
     /** Message resources Common */
     @Autowired
     private MessageSourceCommon messageSourceCommon;
     /** Event list: Exit frame */
     private final List<ExitFrameEvent> exitFrameEvents = new ArrayList<>();
+
+    /** Main panel */
+    private JPanel mainPanel;
 
     /**
      * Invoked when the user attempts to close the window
@@ -66,7 +72,7 @@ public class MainFrameImpl extends BaseFrame implements MainFrame {
         /* ************************************************** */
         /* Panel root
         /* ************************************************** */
-        JPanel mainPanel = new JPanel();
+        mainPanel = new JPanel();
         this.add(mainPanel);
         mainPanel.setLayout(new BorderLayout());
         /* ************************************************** */
@@ -75,6 +81,7 @@ public class MainFrameImpl extends BaseFrame implements MainFrame {
         MainMenuControl menuBar = ConfigurationCore.getBean(MainMenuControl.class);
         assert menuBar != null;
         this.setJMenuBar(menuBar.getInstance());
+        menuBar.addMenuActionEventListener(this);
     }
 
     /**
@@ -142,4 +149,19 @@ public class MainFrameImpl extends BaseFrame implements MainFrame {
         exitFrameEvents.clear();
     }
 
+    /**
+     * <h2>Action menu performed</h2>
+     * Invoked when action of menu is occur
+     *
+     * @param action  {@linkplain ActionCommands Action command} of menu occur
+     * @param control {@linkplain MainMenuControl Main menu control} is occurred
+     */
+    @Override
+    public void menuPerformed(String action, MainMenuControl control) {
+        if (ActionCommands.CREATE_NEW_TRAINING.equals(action)) {
+            TrainingPageControl trainingPageControl = ConfigurationCore.getBean(TrainingPageControl.class);
+            assert trainingPageControl != null;
+            mainPanel.add(trainingPageControl.getInstance());
+        }
+    }
 }

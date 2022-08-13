@@ -1,5 +1,7 @@
 package com.boluclac.facedetection.gui.controls.face;
 
+import com.boluclac.facedetection.gui.events.face.MenuActionEvent;
+
 import javax.swing.JMenuBar;
 
 /**
@@ -18,4 +20,12 @@ public interface MainMenuControl {
      * @return instance object
      */
     JMenuBar getInstance();
+
+    /**
+     * <h2>Add event: {@linkplain MenuActionEvent Menu action event}</h2>
+     * Add action menu event listener
+     *
+     * @param event Menu action event
+     */
+    void addMenuActionEventListener(MenuActionEvent event);
 }

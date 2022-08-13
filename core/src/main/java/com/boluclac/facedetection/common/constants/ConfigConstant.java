@@ -14,4 +14,6 @@ public class ConfigConstant {
     public static final String CONFIG_MSG_BASENAME = "config.message.basename";
     /** Config key: "config.message.locales" */
     public static final String CONFIG_MSG_LOCALES = "config.message.locales";
+    /** Config key: "config.message.locale" */
+    public static final String CONFIG_MSG_LOCALE = "config.message.locale";
 }

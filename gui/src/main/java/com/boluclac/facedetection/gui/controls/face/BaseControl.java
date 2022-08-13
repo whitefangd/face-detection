@@ -1,32 +1,15 @@
-package com.boluclac.facedetection.gui.controls.impl;
+package com.boluclac.facedetection.gui.controls.face;
 
-import com.boluclac.facedetection.common.beans.MessageSourceCommon;
-import org.springframework.beans.factory.annotation.Autowired;
-
-import javax.annotation.PostConstruct;
-import javax.swing.JComponent;
 import java.util.Locale;
 
-public abstract class BaseControl<T extends JComponent> {
-
-    /** Message Source Common */
-    @Autowired
-    protected MessageSourceCommon messageSourceCommon;
-    /** instance object */
-    protected T instance;
+public interface BaseControl {
 
     /**
      * <h2>Construct</h2>
      * Construct no parameter.<br>
      * After processed, function {@link #afterCreateInit()} will be called automatically
      */
-    @PostConstruct
-    public void init() {
-        graphicDesignInit();
-        assert instance != null;
-        afterLocaleSet(messageSourceCommon.getLocale());
-        afterCreateInit();
-    }
+    void init();
 
     /**
      * <h2>Initialize Graphic Design </h2>
@@ -40,7 +23,7 @@ public abstract class BaseControl<T extends JComponent> {
      *
      * @apiNote This is abstract  function, required implement when extend
      */
-    protected abstract void graphicDesignInit();
+    void graphicDesignInit();
 
     /**
      * <h2>Locale change</h2>
@@ -56,7 +39,7 @@ public abstract class BaseControl<T extends JComponent> {
      *
      * @apiNote This is abstract  function, required implement when extend
      */
-    protected abstract void afterLocaleSet(Locale locale);
+    void afterLocaleSet(Locale locale);
 
     /**
      * <h2>Initialize After</h2>
@@ -70,5 +53,12 @@ public abstract class BaseControl<T extends JComponent> {
      *
      * @apiNote This is abstract  function, required implement when extend
      */
-    protected abstract void afterCreateInit();
+    void afterCreateInit();
+
+    /**
+     * <h2>Redraw layout</h2>
+     * When layout data has updated.
+     * Redraw need to call for update data to layout
+     */
+    void redraw();
 }

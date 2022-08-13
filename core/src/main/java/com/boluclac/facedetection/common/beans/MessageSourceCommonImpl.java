@@ -5,6 +5,7 @@ import com.boluclac.facedetection.common.constants.MessageConstant;
 import com.boluclac.facedetection.utils.StringUtils;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.support.ReloadableResourceBundleMessageSource;
+import org.springframework.context.support.ResourceBundleMessageSource;
 import org.springframework.stereotype.Component;
 
 import javax.annotation.PostConstruct;
@@ -27,8 +28,11 @@ public class MessageSourceCommonImpl extends ReloadableResourceBundleMessageSour
     @Value("${" + ConfigConstant.CONFIG_MSG_BASENAME + "}")
     private String baseName;
     /** List locales */
-    @Value("${" + ConfigConstant.CONFIG_MSG_LOCALES + "}")
+    @Value("#{${" + ConfigConstant.CONFIG_MSG_LOCALES + "}}")
     private List<String> localeNames;
+    /** index locale */
+    @Value("${" + ConfigConstant.CONFIG_MSG_LOCALE + "}")
+    private int locale;
 
     /** List locale names */
     private List<Locale> locales;
@@ -42,6 +46,8 @@ public class MessageSourceCommonImpl extends ReloadableResourceBundleMessageSour
     public void init() {
         this.setBasename(baseName);
         this.setDefaultEncoding(StandardCharsets.UTF_8.name());
+        this.setLocale(getLocales().get(locale));
+        this.setUseCodeAsDefaultMessage(true);
     }
 
     /**
@@ -89,7 +95,7 @@ public class MessageSourceCommonImpl extends ReloadableResourceBundleMessageSour
             locales = new ArrayList<>();
             for (String localeName : localeNames) {
                 assert StringUtils.isNotNullAndEMpty(localeName);
-                Locale locale = new Locale(localeName);
+                Locale locale = new Locale(localeName.substring(0, 2), localeName.substring(3, 5));
                 locales.add(locale);
             }
         }
@@ -101,11 +107,9 @@ public class MessageSourceCommonImpl extends ReloadableResourceBundleMessageSour
      *
      * @return locale
      */
+    @Override
     public String getLocaleName(String locale) {
         assert localeNames != null;
-        if (localeNames.contains(locale)) {
-            return MessageConstant.MESSAGE_LANGUAGE + locale;
-        }
-        return "";
+        return MessageConstant.MESSAGE_LANGUAGE + locale;
     }
 }

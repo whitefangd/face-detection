@@ -160,10 +160,17 @@ public class MainFrameImpl extends BaseFrame implements MainFrame, MenuActionEve
     @Override
     public void menuPerformed(String action, MainMenuControl control) {
         if (ActionCommands.CREATE_NEW_TRAINING.equals(action)) {
-            TrainingPageControl trainingPageControl = ConfigurationCore.getBean(TrainingPageControl.class);
-            assert trainingPageControl != null;
-            mainPanel.add(trainingPageControl.getInstance(), BorderLayout.CENTER);
-            mainPanel.revalidate();
+            createNewTraining();
         }
+    }
+
+    /**
+     * Create page: Training page
+     */
+    private void createNewTraining() {
+        TrainingPageControl trainingPageControl = ConfigurationCore.getBean(TrainingPageControl.class);
+        assert trainingPageControl != null;
+        mainPanel.add(trainingPageControl.getInstance(), BorderLayout.CENTER);
+        mainPanel.revalidate();
     }
 }

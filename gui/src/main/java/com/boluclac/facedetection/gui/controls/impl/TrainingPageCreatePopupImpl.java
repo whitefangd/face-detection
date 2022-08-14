@@ -1,34 +1,30 @@
 package com.boluclac.facedetection.gui.controls.impl;
 
-import com.boluclac.facedetection.ConfigurationCore;
 import com.boluclac.facedetection.common.beans.MessageSourceCommon;
 import com.boluclac.facedetection.gui.controls.face.BaseControl;
-import com.boluclac.facedetection.gui.controls.face.TrainingPageControl;
 import com.boluclac.facedetection.gui.controls.face.TrainingPageCreatePopup;
 import org.springframework.beans.factory.config.ConfigurableBeanFactory;
 import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Component;
 
 import javax.annotation.PostConstruct;
-import javax.swing.JPanel;
-import javax.swing.JScrollPane;
-import javax.swing.JSplitPane;
-import javax.swing.ScrollPaneLayout;
+import javax.swing.JDialog;
 import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.Dimension;
 import java.util.Locale;
 
 /**
- * <h1>Training page - control Implement</h1>
- * Design Training page control
+ * <h1>Training page create - popup implement</h1>
+ * Design popup new training page.
+ * Create location and training name
  *
  * @author boluclac
  * @version 0.0.0
  */
 @Component
 @Scope(ConfigurableBeanFactory.SCOPE_PROTOTYPE)
-public class TrainingPageControlImpl extends JPanel implements BaseControl, TrainingPageControl {
+public class TrainingPageCreatePopupImpl extends JDialog implements BaseControl, TrainingPageCreatePopup {
 
     /** Message Source Common */
     private final MessageSourceCommon messageSourceCommon;
@@ -39,18 +35,18 @@ public class TrainingPageControlImpl extends JPanel implements BaseControl, Trai
      *
      * @param messageSourceCommon Message source common
      */
-    public TrainingPageControlImpl(MessageSourceCommon messageSourceCommon) {
+    public TrainingPageCreatePopupImpl(MessageSourceCommon messageSourceCommon) {
         this.messageSourceCommon = messageSourceCommon;
     }
 
     /**
      * <h2>get instance object</h2>
-     * This is training page instance, it is cast {@link JPanel}
+     * This is training popup new training page instance, it is cast {@link JDialog}
      *
      * @return instance object
      */
     @Override
-    public JPanel getInstance() {
+    public JDialog getInstance() {
         return this;
     }
 
@@ -62,28 +58,6 @@ public class TrainingPageControlImpl extends JPanel implements BaseControl, Trai
     @PostConstruct
     @Override
     public void init() {
-        initCreatePopup();
-    }
-
-    /**
-     * <h2>Construct</h2>
-     * Construct no parameter.<br>
-     * After processed, function {@link #afterCreateInit()} will be called automatically
-     */
-    public void initCreatePopup() {
-        TrainingPageCreatePopup trainingPageCreatePopup = ConfigurationCore.getBean(TrainingPageCreatePopup.class);
-        assert trainingPageCreatePopup != null;
-         trainingPageCreatePopup.getInstance().pack();
-         trainingPageCreatePopup.getInstance().setLocationRelativeTo(this);
-         trainingPageCreatePopup.getInstance().setVisible(true);
-    }
-
-    /**
-     * <h2>Construct</h2>
-     * Construct no parameter.<br>
-     * After processed, function {@link #afterCreateInit()} will be called automatically
-     */
-    public void initCreateTraining() {
         graphicDesignInit();
         afterLocaleSet(messageSourceCommon.getLocale());
         afterCreateInit();
@@ -108,33 +82,9 @@ public class TrainingPageControlImpl extends JPanel implements BaseControl, Trai
         /* ************************************************** */
         this.setBackground(Color.GRAY);
         this.setLayout(new BorderLayout());
-        /* ************************************************** */
-        /* Control options
-        /* ************************************************** */
-        JPanel optionPanel = new JPanel();
-        optionPanel.setLayout(new BorderLayout());
-        /* ************************************************** */
-        /* Control options scroll panel
-        /* ************************************************** */
-        JScrollPane leftScrollPanel = new JScrollPane();
-        leftScrollPanel.setLayout(new ScrollPaneLayout());
-        leftScrollPanel.setViewportView(optionPanel);
-        leftScrollPanel.setMinimumSize(new Dimension(300, 0));
-        leftScrollPanel.setPreferredSize(new Dimension(300, 0));
-        /* ************************************************** */
-        /* Content panel
-        /* ************************************************** */
-        JPanel rightContentPanel = new JPanel();
-        rightContentPanel.setLayout(new BorderLayout());
-        rightContentPanel.setBackground(Color.GRAY);
-        /* ************************************************** */
-        /* Split panel
-        /* ************************************************** */
-        JSplitPane mainPanel = new JSplitPane();
-        this.add(mainPanel, BorderLayout.CENTER);
-        mainPanel.setOrientation(JSplitPane.HORIZONTAL_SPLIT);
-        mainPanel.setLeftComponent(leftScrollPanel);
-        mainPanel.setRightComponent(rightContentPanel);
+        this.setPreferredSize(new Dimension(500, 300));
+        this.setResizable(false);
+        this.setType(Type.UTILITY);
     }
 
     /**

@@ -55,10 +55,4 @@ public interface BaseControl {
      */
     void afterCreateInit();
 
-    /**
-     * <h2>Redraw layout</h2>
-     * When layout data has updated.
-     * Redraw need to call for update data to layout
-     */
-    void redraw();
 }

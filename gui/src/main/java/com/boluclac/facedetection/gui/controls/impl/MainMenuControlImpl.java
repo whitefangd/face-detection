@@ -1,12 +1,12 @@
 package com.boluclac.facedetection.gui.controls.impl;
 
 import com.boluclac.facedetection.common.beans.MessageSourceCommon;
+import com.boluclac.facedetection.gui.common.constants.MessageGUIConstant;
 import com.boluclac.facedetection.gui.controls.JLanguageMenuItem;
 import com.boluclac.facedetection.gui.controls.face.BaseControl;
 import com.boluclac.facedetection.gui.controls.face.MainMenuControl;
 import com.boluclac.facedetection.gui.events.ActionCommands;
 import com.boluclac.facedetection.gui.events.face.MenuActionEvent;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.config.ConfigurableBeanFactory;
 import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Component;
@@ -33,8 +33,7 @@ import java.util.Locale;
 public class MainMenuControlImpl extends JMenuBar implements BaseControl, MainMenuControl, ActionListener {
 
     /** Message Source Common */
-    @Autowired
-    MessageSourceCommon messageSourceCommon;
+    private final MessageSourceCommon messageSourceCommon;
 
     /** List menu action listener */
     private final List<MenuActionEvent> menuActionEvents = new ArrayList<>();
@@ -49,6 +48,18 @@ public class MainMenuControlImpl extends JMenuBar implements BaseControl, MainMe
     private JMenuItem languageMenu;
     /** About menu */
     private JMenuItem aboutMenu;
+    /** Create training menu */
+    private JMenuItem createTrainingMenu;
+
+    /**
+     * Constructor.
+     * Initialize bean
+     *
+     * @param messageSourceCommon Message source common
+     */
+    public MainMenuControlImpl(MessageSourceCommon messageSourceCommon) {
+        this.messageSourceCommon = messageSourceCommon;
+    }
 
     /**
      * <h2>Construct</h2>
@@ -136,10 +147,10 @@ public class MainMenuControlImpl extends JMenuBar implements BaseControl, MainMe
         /* ************************************************** */
         /* Create training menu
         /* ************************************************** */
-        JMenuItem createMenu = new JMenuItem();
-        fileMenu.add(createMenu, 0);
-        createMenu.setActionCommand(ActionCommands.CREATE_NEW_TRAINING);
-        createMenu.addActionListener(this);
+        createTrainingMenu = new JMenuItem();
+        fileMenu.add(createTrainingMenu, 0);
+        createTrainingMenu.setActionCommand(ActionCommands.CREATE_NEW_TRAINING);
+        createTrainingMenu.addActionListener(this);
     }
 
     /**
@@ -158,11 +169,11 @@ public class MainMenuControlImpl extends JMenuBar implements BaseControl, MainMe
      */
     @Override
     public void afterLocaleSet(Locale locale) {
-        fileMenu.setText(messageSourceCommon.getMessage("menu.file", locale));
-        trainingMenu.setText(messageSourceCommon.getMessage("menu.training", locale));
-        helpMenu.setText(messageSourceCommon.getMessage("menu.help", locale));
-        languageMenu.setText(messageSourceCommon.getMessage("menu.language", locale));
-        aboutMenu.setText(messageSourceCommon.getMessage("menu.about", locale));
+        fileMenu.setText(messageSourceCommon.getMessage(MessageGUIConstant.MENU_FILE, locale));
+        trainingMenu.setText(messageSourceCommon.getMessage(MessageGUIConstant.MENU_TRAINING, locale));
+        helpMenu.setText(messageSourceCommon.getMessage(MessageGUIConstant.MENU_HELP, locale));
+        languageMenu.setText(messageSourceCommon.getMessage(MessageGUIConstant.MENU_LANGUAGE, locale));
+        aboutMenu.setText(messageSourceCommon.getMessage(MessageGUIConstant.MENU_ABOUT, locale));
         if (languageMenu instanceof JMenu) {
             JMenu languageMenuTemp = (JMenu) languageMenu;
             for (int indexMenu = 0; indexMenu < languageMenuTemp.getItemCount(); indexMenu++) {
@@ -171,6 +182,7 @@ public class MainMenuControlImpl extends JMenuBar implements BaseControl, MainMe
                 menuItem.setText(messageSourceCommon.getMessage(menuName, locale));
             }
         }
+        createTrainingMenu.setText(messageSourceCommon.getMessage(MessageGUIConstant.MENU_FILE_NEW_TRAINING, locale));
     }
 
     /**
@@ -187,23 +199,7 @@ public class MainMenuControlImpl extends JMenuBar implements BaseControl, MainMe
      */
     @Override
     public void afterCreateInit() {
-        if (languageMenu instanceof JMenu) {
-            JMenu languageMenuTemp = (JMenu) languageMenu;
-            for (int indexMenu = 0; indexMenu < languageMenuTemp.getItemCount(); indexMenu++) {
-                JMenuItem menuItem = languageMenuTemp.getItem(indexMenu);
-            }
-        }
-    }
-
-    /**
-     * <h2>Redraw layout</h2>
-     * When layout data has updated.
-     * Redraw need to call for update data to layout
-     */
-    @Override
-    public void redraw() {
-        //  this.repaint();
-        // fileMenu.repaint();
+        // DO nothing
     }
 
     /**

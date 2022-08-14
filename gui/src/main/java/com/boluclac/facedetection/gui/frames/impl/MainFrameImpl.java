@@ -13,6 +13,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 
 import javax.swing.JFrame;
 import javax.swing.JPanel;
+import javax.swing.SwingUtilities;
 import java.awt.BorderLayout;
 import java.awt.event.WindowEvent;
 import java.util.ArrayList;
@@ -73,7 +74,7 @@ public class MainFrameImpl extends BaseFrame implements MainFrame, MenuActionEve
         /* Panel root
         /* ************************************************** */
         mainPanel = new JPanel();
-        this.add(mainPanel);
+        this.add(mainPanel, BorderLayout.CENTER);
         mainPanel.setLayout(new BorderLayout());
         /* ************************************************** */
         /* Main menu
@@ -161,7 +162,8 @@ public class MainFrameImpl extends BaseFrame implements MainFrame, MenuActionEve
         if (ActionCommands.CREATE_NEW_TRAINING.equals(action)) {
             TrainingPageControl trainingPageControl = ConfigurationCore.getBean(TrainingPageControl.class);
             assert trainingPageControl != null;
-            mainPanel.add(trainingPageControl.getInstance());
+            mainPanel.add(trainingPageControl.getInstance(), BorderLayout.CENTER);
+            mainPanel.revalidate();
         }
     }
 }

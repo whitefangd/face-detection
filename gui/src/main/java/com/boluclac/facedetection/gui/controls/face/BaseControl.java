@@ -1,5 +1,7 @@
 package com.boluclac.facedetection.gui.controls.face;
 
+import javax.swing.*;
+import java.awt.*;
 import java.util.Locale;
 
 public interface BaseControl {
@@ -36,7 +38,6 @@ public interface BaseControl {
      * </ol>
      *
      * @param locale Locale language
-     *
      * @apiNote This is abstract  function, required implement when extend
      */
     void afterLocaleSet(Locale locale);
@@ -55,4 +56,9 @@ public interface BaseControl {
      */
     void afterCreateInit();
 
+    /**
+     * <h2>Get Frame content control</h2>
+     * get Frame is {@link JFrame}, it contain this control
+     */
+    Window getFrameContainer();
 }

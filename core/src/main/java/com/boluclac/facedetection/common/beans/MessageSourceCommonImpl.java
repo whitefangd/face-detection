@@ -112,4 +112,27 @@ public class MessageSourceCommonImpl extends ReloadableResourceBundleMessageSour
         assert localeNames != null;
         return MessageConstant.MESSAGE_LANGUAGE + locale;
     }
+
+    /**
+     * get message by code follow default locale
+     *
+     * @param code message code is defined in properties
+     * @return Message text
+     */
+    @Override
+    public String getMessage(String code) {
+        return this.getMessage(code, null, getLocale());
+    }
+
+    /**
+     * get message by code follow default locale
+     *
+     * @param code       message code is defined in properties
+     * @param parameters parameter values
+     * @return Message text
+     */
+    @Override
+    public String getMessage(String code, String[] parameters) {
+        return this.getMessage(code, parameters, getLocale());
+    }
 }

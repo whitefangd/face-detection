@@ -6,15 +6,14 @@ import com.boluclac.facedetection.common.beans.MessageSourceCommon;
 import com.boluclac.facedetection.gui.controls.face.MainMenuControl;
 import com.boluclac.facedetection.gui.controls.face.TrainingPageControl;
 import com.boluclac.facedetection.gui.events.ActionCommands;
-import com.boluclac.facedetection.gui.events.face.ExitFrameEvent;
+import com.boluclac.facedetection.gui.events.face.MainFrameEvent;
 import com.boluclac.facedetection.gui.events.face.MenuActionEvent;
 import com.boluclac.facedetection.gui.frames.face.MainFrame;
 import org.springframework.beans.factory.annotation.Autowired;
 
 import javax.swing.JFrame;
 import javax.swing.JPanel;
-import javax.swing.SwingUtilities;
-import java.awt.BorderLayout;
+import java.awt.*;
 import java.awt.event.WindowEvent;
 import java.util.ArrayList;
 import java.util.List;
@@ -34,7 +33,7 @@ public class MainFrameImpl extends BaseFrame implements MainFrame, MenuActionEve
     @Autowired
     private MessageSourceCommon messageSourceCommon;
     /** Event list: Exit frame */
-    private final List<ExitFrameEvent> exitFrameEvents = new ArrayList<>();
+    private final List<MainFrameEvent> exitFrameEvents = new ArrayList<>();
 
     /** Main panel */
     private JPanel mainPanel;
@@ -47,7 +46,7 @@ public class MainFrameImpl extends BaseFrame implements MainFrame, MenuActionEve
      */
     @Override
     public void windowClosing(WindowEvent event) {
-        for (ExitFrameEvent exitFrameEvent : exitFrameEvents) {
+        for (MainFrameEvent exitFrameEvent : exitFrameEvents) {
             exitFrameEvent.exit();
         }
     }
@@ -124,7 +123,7 @@ public class MainFrameImpl extends BaseFrame implements MainFrame, MenuActionEve
      * @param event Edit frame event
      */
     @Override
-    public void addExitFrameEventListener(ExitFrameEvent event) {
+    public void addEventListener(MainFrameEvent event) {
         exitFrameEvents.add(event);
     }
 
@@ -136,7 +135,7 @@ public class MainFrameImpl extends BaseFrame implements MainFrame, MenuActionEve
      * @param event Edit frame event
      */
     @Override
-    public void removeExitFrameEventListener(ExitFrameEvent event) {
+    public void removeEventListener(MainFrameEvent event) {
         exitFrameEvents.remove(event);
     }
 
@@ -146,7 +145,7 @@ public class MainFrameImpl extends BaseFrame implements MainFrame, MenuActionEve
      * clear event listener registered
      */
     @Override
-    public void clearExitFrameEventListener() {
+    public void clearEventListener() {
         exitFrameEvents.clear();
     }
 
@@ -168,7 +167,14 @@ public class MainFrameImpl extends BaseFrame implements MainFrame, MenuActionEve
      * Create page: Training page
      */
     private void createNewTraining() {
-        TrainingPageControl trainingPageControl = ConfigurationCore.getBean(TrainingPageControl.class);
+        if (mainPanel.getComponentCount() > 0) {
+            Component component = mainPanel.getComponent(0);
+            if (component instanceof TrainingPageControl) {
+                return;
+            }
+            mainPanel.remove(0);
+        }
+        TrainingPageControl trainingPageControl = ConfigurationCore.getBean(TrainingPageControl.class, this);
         assert trainingPageControl != null;
         mainPanel.add(trainingPageControl.getInstance(), BorderLayout.CENTER);
         mainPanel.revalidate();

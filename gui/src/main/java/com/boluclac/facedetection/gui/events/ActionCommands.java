@@ -12,4 +12,10 @@ public class ActionCommands {
     public static final String CHANGE_LANGUAGE = "CHANGE_LANGUAGE";
     /** Action: create new training */
     public static final String CREATE_NEW_TRAINING = "CREATE_NEW_TRAINING";
+    /** Action: choose folder */
+    public static final String CHOOSE_FOLDER = "CHOOSE_FOLDER";
+    /** Action: cancel */
+    public static final String CANCEL = "CANCEL";
+    /** Action: ok */
+    public static final String OK = "OK";
 }

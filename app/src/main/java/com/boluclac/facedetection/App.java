@@ -1,6 +1,6 @@
 package com.boluclac.facedetection;
 
-import com.boluclac.facedetection.gui.events.face.ExitFrameEvent;
+import com.boluclac.facedetection.gui.events.face.MainFrameEvent;
 import com.boluclac.facedetection.gui.frames.face.MainFrame;
 
 /**
@@ -11,7 +11,7 @@ import com.boluclac.facedetection.gui.frames.face.MainFrame;
  *     <li>{@link MainFrame} launcher</li>
  * </ul>
  */
-public class App implements ExitFrameEvent {
+public class App implements MainFrameEvent {
 
     /** Instance. */
     private static App instance = null;
@@ -32,7 +32,7 @@ public class App implements ExitFrameEvent {
         /* {@link MainFrame} launcher */
         MainFrame mainFrame = ConfigurationCore.getBean(MainFrame.class);
         assert mainFrame != null;
-        mainFrame.addExitFrameEventListener(App.getInstance());
+        mainFrame.addEventListener(App.getInstance());
         mainFrame.open();
     }
 

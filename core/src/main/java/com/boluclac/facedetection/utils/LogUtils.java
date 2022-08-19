@@ -38,4 +38,8 @@ public class LogUtils {
         }
         return LOGGER;
     }
+
+    public static void error(String message, Exception validations) {
+        
+    }
 }

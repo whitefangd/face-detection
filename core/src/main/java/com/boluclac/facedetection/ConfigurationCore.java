@@ -55,10 +55,14 @@ public class ConfigurationCore {
      *
      * @return bean object
      */
-    public static <T> T getBean(Class<T> clazz) {
+    public static <T> T getBean(Class<T> clazz, Object... var2) {
         if (applicationContext != null) {
             LogUtils.debug("get bean: " + clazz.toString());
-            return applicationContext.getBean(clazz);
+            if (var2 != null && var2.length > 0) {
+                return applicationContext.getBean(clazz, var2);
+            } else {
+                return applicationContext.getBean(clazz);
+            }
         } else {
             return null;
         }

@@ -1,5 +1,8 @@
 package com.boluclac.facedetection.gui.controls.face;
 
+import com.boluclac.facedetection.gui.events.face.MainFrameEvent;
+import com.boluclac.facedetection.gui.events.face.TrainingPageCreatePopupEvent;
+
 import javax.swing.JDialog;
 
 /**
@@ -18,4 +21,26 @@ public interface TrainingPageCreatePopup {
      * @return instance object
      */
     JDialog getInstance();
+
+    /**
+     * <h2>Add Event: Training popup</h2>
+     * Event is triggered when Training popup has process
+     *
+     * @param event Training popup event
+     */
+    void addEventListener(TrainingPageCreatePopupEvent event);
+
+    /**
+     * <h2>Remove Event: Training popup</h2>
+     * Event is triggered when Training popup has process
+     *
+     * @param event Training popup event
+     */
+    void removeEventListener(TrainingPageCreatePopupEvent event);
+
+    /**
+     * <h2>Clear Event: Training popup</h2>
+     * Event is triggered when Training popup has process
+     */
+    void clearEventListener();
 }

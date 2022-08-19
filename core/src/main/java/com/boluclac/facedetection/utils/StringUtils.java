@@ -15,7 +15,6 @@ public class StringUtils {
      * check String value is not null and empty
      *
      * @param value String value
-     *
      * @return flag {@link Boolean}
      * <ul>
      *     <li>{@linkplain Boolean#FALSE FALSE}: is NULL or Empty</li>
@@ -24,5 +23,19 @@ public class StringUtils {
      */
     public static boolean isNotNullAndEMpty(String value) {
         return value != null && !STRING_EMPTY.equals(value);
+    }
+
+    /**
+     * check String value is null or empty
+     *
+     * @param value String value
+     * @return flag {@link Boolean}
+     * <ul>
+     *     <li>{@linkplain Boolean#FALSE FALSE}: is not NULL and Empty</li>
+     *     <Li>{@linkplain Boolean#TRUE TRUE}: is NUll or Empty</Li>
+     * </ul>
+     */
+    public static boolean isNullOrEMpty(String value) {
+        return value == null || STRING_EMPTY.equals(value);
     }
 }

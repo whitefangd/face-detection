@@ -5,18 +5,14 @@ import com.boluclac.facedetection.common.beans.MessageSourceCommon;
 import com.boluclac.facedetection.gui.controls.face.BaseControl;
 import com.boluclac.facedetection.gui.controls.face.TrainingPageControl;
 import com.boluclac.facedetection.gui.controls.face.TrainingPageCreatePopup;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.config.ConfigurableBeanFactory;
 import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Component;
 
 import javax.annotation.PostConstruct;
-import javax.swing.JPanel;
-import javax.swing.JScrollPane;
-import javax.swing.JSplitPane;
-import javax.swing.ScrollPaneLayout;
-import java.awt.BorderLayout;
-import java.awt.Color;
-import java.awt.Dimension;
+import javax.swing.*;
+import java.awt.*;
 import java.util.Locale;
 
 /**
@@ -31,16 +27,21 @@ import java.util.Locale;
 public class TrainingPageControlImpl extends JPanel implements BaseControl, TrainingPageControl {
 
     /** Message Source Common */
-    private final MessageSourceCommon messageSourceCommon;
+    @Autowired
+    private MessageSourceCommon messageSourceCommon;
+
+    /** Frame content */
+    private Window contentFrame;
 
     /**
      * Constructor.
      * Initialize bean
      *
-     * @param messageSourceCommon Message source common
+     * @param frameContentParam Frame content
      */
-    public TrainingPageControlImpl(MessageSourceCommon messageSourceCommon) {
-        this.messageSourceCommon = messageSourceCommon;
+    public TrainingPageControlImpl(Window frameContentParam) {
+        super();
+        this.contentFrame = frameContentParam;
     }
 
     /**
@@ -71,11 +72,9 @@ public class TrainingPageControlImpl extends JPanel implements BaseControl, Trai
      * After processed, function {@link #afterCreateInit()} will be called automatically
      */
     public void initCreatePopup() {
-        TrainingPageCreatePopup trainingPageCreatePopup = ConfigurationCore.getBean(TrainingPageCreatePopup.class);
+        TrainingPageCreatePopup trainingPageCreatePopup = ConfigurationCore.getBean(TrainingPageCreatePopup.class, this, contentFrame);
         assert trainingPageCreatePopup != null;
-         trainingPageCreatePopup.getInstance().pack();
-         trainingPageCreatePopup.getInstance().setLocationRelativeTo(this);
-         trainingPageCreatePopup.getInstance().setVisible(true);
+        trainingPageCreatePopup.getInstance().setVisible(true);
     }
 
     /**
@@ -148,7 +147,6 @@ public class TrainingPageControlImpl extends JPanel implements BaseControl, Trai
      * </ol>
      *
      * @param locale Locale language
-     *
      * @apiNote This is abstract  function, required implement when extend
      */
     @Override
@@ -171,5 +169,14 @@ public class TrainingPageControlImpl extends JPanel implements BaseControl, Trai
     @Override
     public void afterCreateInit() {
 
+    }
+
+    /**
+     * <h2>Get Frame content control</h2>
+     * get Frame is {@link JFrame}, it contain this control
+     */
+    @Override
+    public Window getFrameContainer() {
+        return contentFrame;
     }
 }

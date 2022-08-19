@@ -7,15 +7,14 @@ import com.boluclac.facedetection.gui.controls.face.BaseControl;
 import com.boluclac.facedetection.gui.controls.face.MainMenuControl;
 import com.boluclac.facedetection.gui.events.ActionCommands;
 import com.boluclac.facedetection.gui.events.face.MenuActionEvent;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.config.ConfigurableBeanFactory;
 import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Component;
 
 import javax.annotation.PostConstruct;
-import javax.swing.JMenu;
-import javax.swing.JMenuBar;
-import javax.swing.JMenuItem;
-import javax.swing.KeyStroke;
+import javax.swing.*;
+import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.KeyEvent;
@@ -35,7 +34,11 @@ import java.util.Locale;
 public class MainMenuControlImpl extends JMenuBar implements BaseControl, MainMenuControl, ActionListener {
 
     /** Message Source Common */
-    private final MessageSourceCommon messageSourceCommon;
+    @Autowired
+    private MessageSourceCommon messageSourceCommon;
+
+    /** Frame content */
+    private Window contentFrame;
 
     /** List menu action listener */
     private final List<MenuActionEvent> menuActionEvents = new ArrayList<>();
@@ -57,10 +60,11 @@ public class MainMenuControlImpl extends JMenuBar implements BaseControl, MainMe
      * Constructor.
      * Initialize bean
      *
-     * @param messageSourceCommon Message source common
+     * @param frameContentParam Frame content
      */
-    public MainMenuControlImpl(MessageSourceCommon messageSourceCommon) {
-        this.messageSourceCommon = messageSourceCommon;
+    public MainMenuControlImpl(JFrame frameContentParam) {
+        super();
+        this.contentFrame = frameContentParam;
     }
 
     /**
@@ -204,6 +208,15 @@ public class MainMenuControlImpl extends JMenuBar implements BaseControl, MainMe
     @Override
     public void afterCreateInit() {
         // DO nothing
+    }
+
+    /**
+     * <h2>Get Frame content control</h2>
+     * get Frame is {@link JFrame}, it contain this control
+     */
+    @Override
+    public Window getFrameContainer() {
+        return contentFrame;
     }
 
     /**

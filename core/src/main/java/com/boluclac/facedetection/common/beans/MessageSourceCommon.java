@@ -36,6 +36,7 @@ public interface MessageSourceCommon {
 
     /**
      * get list locales
+     *
      * @return locales
      */
     List<Locale> getLocales();
@@ -46,4 +47,21 @@ public interface MessageSourceCommon {
      * @return locale
      */
     String getLocaleName(String locale);
+
+    /**
+     * get message by code follow default locale
+     *
+     * @param code message code is defined in properties
+     * @return Message text
+     */
+    String getMessage(String code);
+
+    /**
+     * get message by code follow default locale
+     *
+     * @param code message code is defined in properties
+     * @param parameters parameter values
+     * @return Message text
+     */
+    String getMessage(String code, String[] parameters);
 }

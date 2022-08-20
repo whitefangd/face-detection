@@ -2,6 +2,7 @@ package com.boluclac.facedetection.gui.controls.impl;
 
 import com.boluclac.facedetection.ConfigurationCore;
 import com.boluclac.facedetection.common.beans.MessageSourceCommon;
+import com.boluclac.facedetection.gui.common.constants.Constants;
 import com.boluclac.facedetection.gui.common.constants.MessageGUIConstant;
 import com.boluclac.facedetection.gui.controls.face.BaseControl;
 import com.boluclac.facedetection.gui.controls.face.ErrorsControl;
@@ -26,6 +27,9 @@ import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.io.File;
+import java.io.IOException;
+import java.nio.file.Path;
+import java.nio.file.Paths;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Locale;
@@ -295,6 +299,16 @@ public class TrainingPageCreatePopupImpl extends JDialog implements BaseControl,
         this.errorsControl.clear();
         try {
             checkCreateValidate();
+            if (projectFolder.isDirectory()) {
+                Path path = Paths.get(projectFolder.getPath(), Constants.PROJECT_TRAINING_FILE_NAME);
+                File projectFile = path.toFile();
+                if (!projectFile.exists()) {
+                    assert projectFile.createNewFile();
+                } else if (projectFile.isDirectory()) {
+                    throw new ValidationExceptions();
+                }
+
+            }
             for (TrainingPageCreateEvent event : events) {
                 event.createTrainingProject(this.txtName.getText(), this.projectFolder);
             }
@@ -302,6 +316,8 @@ public class TrainingPageCreatePopupImpl extends JDialog implements BaseControl,
         } catch (ValidationExceptions validations) {
             LogUtils.error(validations.getMessage(), validations);
             this.errorsControl.setErrors(validations);
+        } catch (IOException e) {
+            throw new RuntimeException(e);
         }
     }
 

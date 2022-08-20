@@ -21,6 +21,13 @@ import java.awt.*;
 import java.util.List;
 import java.util.Locale;
 
+/**
+ * <h1>Error control implement</h1>
+ * Errors control, display errors list
+ *
+ * @author boluclac
+ * @version 0.0.0
+ */
 @Component
 @Scope(ConfigurableBeanFactory.SCOPE_PROTOTYPE)
 public class ErrorsControlImpl extends JPanel implements BaseControl, ErrorsControl {
@@ -142,14 +149,19 @@ public class ErrorsControlImpl extends JPanel implements BaseControl, ErrorsCont
     }
 
     /**
-     * @param validations
+     * <h2>Set Validation errors</h2>
+     * Set Validation errors is Exception
+     *
+     * @param validations Validation errors
      */
     @Override
     public void setErrors(ValidationExceptions validations) {
         List<String> messages = validations.getMessageErrors();
+        /* Remove All message then add new message in list message*/
         mainPanel.setBorder(null);
         mainPanel.removeAll();
         if (!messages.isEmpty()) {
+            /* Title is only added when have error information */
             this.mainPanel.setBorder(border);
             this.title.setTitle(messageSourceCommon.getMessage(MessageGUIConstant.ERRORS.TITLE));
             for (String message : messages) {
@@ -164,7 +176,7 @@ public class ErrorsControlImpl extends JPanel implements BaseControl, ErrorsCont
     }
 
     /**
-     *
+     * Clear all errors message.
      */
     @Override
     public void clear() {

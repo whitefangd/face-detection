@@ -8,11 +8,11 @@ import com.boluclac.facedetection.gui.controls.face.TrainingPageControl;
 import com.boluclac.facedetection.gui.events.ActionCommands;
 import com.boluclac.facedetection.gui.events.face.MainFrameEvent;
 import com.boluclac.facedetection.gui.events.face.MenuActionEvent;
+import com.boluclac.facedetection.gui.events.face.TrainingPageEvent;
 import com.boluclac.facedetection.gui.frames.face.MainFrame;
 import org.springframework.beans.factory.annotation.Autowired;
 
-import javax.swing.JFrame;
-import javax.swing.JPanel;
+import javax.swing.*;
 import java.awt.*;
 import java.awt.event.WindowEvent;
 import java.util.ArrayList;
@@ -27,7 +27,7 @@ import java.util.Locale;
  * @version 0.0.0
  */
 @FrameComponent
-public class MainFrameImpl extends BaseFrame implements MainFrame, MenuActionEvent {
+public class MainFrameImpl extends BaseFrame implements MainFrame, MenuActionEvent, TrainingPageEvent {
 
     /** Message resources Common */
     @Autowired
@@ -178,5 +178,19 @@ public class MainFrameImpl extends BaseFrame implements MainFrame, MenuActionEve
         assert trainingPageControl != null;
         mainPanel.add(trainingPageControl.getInstance(), BorderLayout.CENTER);
         mainPanel.revalidate();
+        trainingPageControl.addEventListener(this);
+    }
+
+    /**
+     * <h2>Event dispose item</h2>
+     * dispose this item
+     *
+     * @param component Component dispose
+     */
+    @Override
+    public void actionDisposed(JComponent component) {
+        if (mainPanel.getComponentCount() > 0 && component != null) {
+            mainPanel.remove(component);
+        }
     }
 }

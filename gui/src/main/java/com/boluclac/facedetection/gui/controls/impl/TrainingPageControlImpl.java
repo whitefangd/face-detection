@@ -5,6 +5,8 @@ import com.boluclac.facedetection.common.beans.MessageSourceCommon;
 import com.boluclac.facedetection.gui.controls.face.BaseControl;
 import com.boluclac.facedetection.gui.controls.face.TrainingPageControl;
 import com.boluclac.facedetection.gui.controls.face.TrainingPageCreatePopup;
+import com.boluclac.facedetection.gui.events.face.TrainingPageCreateEvent;
+import com.boluclac.facedetection.gui.events.face.TrainingPageEvent;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.config.ConfigurableBeanFactory;
 import org.springframework.context.annotation.Scope;
@@ -13,6 +15,9 @@ import org.springframework.stereotype.Component;
 import javax.annotation.PostConstruct;
 import javax.swing.*;
 import java.awt.*;
+import java.io.File;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Locale;
 
 /**
@@ -24,14 +29,17 @@ import java.util.Locale;
  */
 @Component
 @Scope(ConfigurableBeanFactory.SCOPE_PROTOTYPE)
-public class TrainingPageControlImpl extends JPanel implements BaseControl, TrainingPageControl {
+public class TrainingPageControlImpl extends JPanel implements BaseControl, TrainingPageControl, TrainingPageCreateEvent {
 
     /** Message Source Common */
     @Autowired
     private MessageSourceCommon messageSourceCommon;
 
+    /** Events list */
+    private final List<TrainingPageEvent> events = new ArrayList<>();
+
     /** Frame content */
-    private Window contentFrame;
+    private final Window contentFrame;
 
     /**
      * Constructor.
@@ -63,7 +71,7 @@ public class TrainingPageControlImpl extends JPanel implements BaseControl, Trai
     @PostConstruct
     @Override
     public void init() {
-        initCreatePopup();
+        SwingUtilities.invokeLater(this::initCreatePopup);
     }
 
     /**
@@ -74,7 +82,9 @@ public class TrainingPageControlImpl extends JPanel implements BaseControl, Trai
     public void initCreatePopup() {
         TrainingPageCreatePopup trainingPageCreatePopup = ConfigurationCore.getBean(TrainingPageCreatePopup.class, this, contentFrame);
         assert trainingPageCreatePopup != null;
-        trainingPageCreatePopup.getInstance().setVisible(true);
+        trainingPageCreatePopup.addEventListener(this);
+        JDialog dialog = trainingPageCreatePopup.getInstance();
+        dialog.setVisible(true);
     }
 
     /**
@@ -178,5 +188,60 @@ public class TrainingPageControlImpl extends JPanel implements BaseControl, Trai
     @Override
     public Window getFrameContainer() {
         return contentFrame;
+    }
+
+    /**
+     * <h2>EventL cancel create new project</h2>
+     * Cancel process create training project
+     */
+    @Override
+    public void cancelProjectCreation() {
+        for (TrainingPageEvent event : events) {
+            event.actionDisposed(this);
+        }
+    }
+
+    /**
+     * <h2>Event create training project</h2>
+     * Accept create new training project
+     *
+     * @param projectName   Project name
+     * @param projectFolder Project folder
+     */
+    @Override
+    public void createTrainingProject(String projectName, File projectFolder) {
+        initCreateTraining();
+    }
+
+
+    /**
+     * <h2>Add Event: Training page</h2>
+     * Event is triggered when Training page has process
+     *
+     * @param event Training page event
+     */
+    @Override
+    public void addEventListener(TrainingPageEvent event) {
+        events.add(event);
+    }
+
+    /**
+     * <h2>Remove Event: Training page</h2>
+     * Event is triggered when Training page has process
+     *
+     * @param event Training page event
+     */
+    @Override
+    public void removeEventListener(TrainingPageEvent event) {
+        events.remove(event);
+    }
+
+    /**
+     * <h2>Clear Event: Training page</h2>
+     * Event is triggered when Training page has process
+     */
+    @Override
+    public void clearEventListener() {
+        events.clear();
     }
 }

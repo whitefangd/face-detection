@@ -7,7 +7,7 @@ import com.boluclac.facedetection.gui.controls.face.BaseControl;
 import com.boluclac.facedetection.gui.controls.face.ErrorsControl;
 import com.boluclac.facedetection.gui.controls.face.TrainingPageCreatePopup;
 import com.boluclac.facedetection.gui.events.ActionCommands;
-import com.boluclac.facedetection.gui.events.face.TrainingPageCreatePopupEvent;
+import com.boluclac.facedetection.gui.events.face.TrainingPageCreateEvent;
 import com.boluclac.facedetection.gui.exceptions.ValidationExceptions;
 import com.boluclac.facedetection.utils.LogUtils;
 import com.boluclac.facedetection.utils.StringUtils;
@@ -46,7 +46,7 @@ public class TrainingPageCreatePopupImpl extends JDialog implements BaseControl,
     @Autowired
     private MessageSourceCommon messageSourceCommon;
 
-    private final List<TrainingPageCreatePopupEvent> events = new ArrayList<>();
+    private final List<TrainingPageCreateEvent> events = new ArrayList<>();
 
     /** project folder */
     private File projectFolder = null;
@@ -138,14 +138,18 @@ public class TrainingPageCreatePopupImpl extends JDialog implements BaseControl,
         this.setType(Type.UTILITY);
         this.setModalityType(ModalityType.APPLICATION_MODAL);
         this.pack();
-        this.setLocationRelativeTo(baseControlParent);
+        this.setLocationRelativeTo(contentFrame);
         this.add(mainPanel);
         this.mainPanel.setLayout(new BorderLayout());
-
+        /* ************************************************** */
+        /* Error control
+        /* ************************************************** */
         errorsControl = ConfigurationCore.getBean(ErrorsControl.class, this);
         assert errorsControl != null;
         this.mainPanel.add(errorsControl.getInstance(), BorderLayout.NORTH);
-
+        /* ************************************************** */
+        /* Panel of project information area
+        /* ************************************************** */
         final JPanel jPanelChoose = new JPanel();
         jPanelChoose.setLayout(new GridBagLayout());
         titledBorderChooseProject = new TitledBorder(new LineBorder(Color.ORANGE), "");
@@ -153,7 +157,9 @@ public class TrainingPageCreatePopupImpl extends JDialog implements BaseControl,
         jPanelChoose.setBorder(compoundBorder);
         jPanelChoose.validate();
         this.mainPanel.add(jPanelChoose, BorderLayout.CENTER);
-
+        /* ************************************************** */
+        /* Panel of project action area
+        /* ************************************************** */
         final JPanel jPanelAction = new JPanel();
         FlowLayout flowLayout = new FlowLayout();
         flowLayout.setAlignment(FlowLayout.RIGHT);
@@ -161,7 +167,7 @@ public class TrainingPageCreatePopupImpl extends JDialog implements BaseControl,
         CompoundBorder compoundBorderAction = new CompoundBorder(new EmptyBorder(2, 2, 2, 2), new LineBorder(Color.ORANGE));
         jPanelAction.setBorder(compoundBorderAction);
         this.mainPanel.add(jPanelAction, BorderLayout.SOUTH);
-
+        /* Prepare position information for item in project information area */
         final GridBagConstraints constraints = new GridBagConstraints();
         constraints.fill = GridBagConstraints.BOTH;
         constraints.insets = new Insets(2, 2, 2, 2);
@@ -289,6 +295,10 @@ public class TrainingPageCreatePopupImpl extends JDialog implements BaseControl,
         this.errorsControl.clear();
         try {
             checkCreateValidate();
+            for (TrainingPageCreateEvent event : events) {
+                event.createTrainingProject(this.txtName.getText(), this.projectFolder);
+            }
+            dispose();
         } catch (ValidationExceptions validations) {
             LogUtils.error(validations.getMessage(), validations);
             this.errorsControl.setErrors(validations);
@@ -320,9 +330,10 @@ public class TrainingPageCreatePopupImpl extends JDialog implements BaseControl,
      * Cancel training project creation
      */
     private void cancelTrainingProject() {
-        for (TrainingPageCreatePopupEvent event : events) {
+        for (TrainingPageCreateEvent event : events) {
             event.cancelProjectCreation();
         }
+        dispose();
     }
 
     /**
@@ -348,7 +359,7 @@ public class TrainingPageCreatePopupImpl extends JDialog implements BaseControl,
      * @param event Training popup event
      */
     @Override
-    public void addEventListener(TrainingPageCreatePopupEvent event) {
+    public void addEventListener(TrainingPageCreateEvent event) {
         events.add(event);
     }
 
@@ -359,7 +370,7 @@ public class TrainingPageCreatePopupImpl extends JDialog implements BaseControl,
      * @param event Training popup event
      */
     @Override
-    public void removeEventListener(TrainingPageCreatePopupEvent event) {
+    public void removeEventListener(TrainingPageCreateEvent event) {
         events.remove(event);
     }
 

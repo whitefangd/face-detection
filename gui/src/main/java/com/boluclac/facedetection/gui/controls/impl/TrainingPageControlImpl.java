@@ -2,11 +2,12 @@ package com.boluclac.facedetection.gui.controls.impl;
 
 import com.boluclac.facedetection.ConfigurationCore;
 import com.boluclac.facedetection.common.beans.MessageSourceCommon;
-import com.boluclac.facedetection.gui.controls.face.BaseControl;
-import com.boluclac.facedetection.gui.controls.face.TrainingPageControl;
-import com.boluclac.facedetection.gui.controls.face.TrainingPageCreatePopup;
-import com.boluclac.facedetection.gui.events.face.TrainingPageCreateEvent;
-import com.boluclac.facedetection.gui.events.face.TrainingPageEvent;
+import com.boluclac.facedetection.gui.common.annotations.ControlComponent;
+import com.boluclac.facedetection.gui.controls.BaseControl;
+import com.boluclac.facedetection.gui.controls.TrainingPageControl;
+import com.boluclac.facedetection.gui.controls.TrainingPageCreatePopup;
+import com.boluclac.facedetection.gui.events.TrainingPageCreateEvent;
+import com.boluclac.facedetection.gui.events.TrainingPageEvent;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.config.ConfigurableBeanFactory;
 import org.springframework.context.annotation.Scope;
@@ -27,8 +28,7 @@ import java.util.Locale;
  * @author boluclac
  * @version 0.0.0
  */
-@Component
-@Scope(ConfigurableBeanFactory.SCOPE_PROTOTYPE)
+@ControlComponent
 public class TrainingPageControlImpl extends JPanel implements BaseControl, TrainingPageControl, TrainingPageCreateEvent {
 
     /** Message Source Common */
@@ -144,6 +144,7 @@ public class TrainingPageControlImpl extends JPanel implements BaseControl, Trai
         mainPanel.setOrientation(JSplitPane.HORIZONTAL_SPLIT);
         mainPanel.setLeftComponent(leftScrollPanel);
         mainPanel.setRightComponent(rightContentPanel);
+
     }
 
     /**
@@ -211,6 +212,8 @@ public class TrainingPageControlImpl extends JPanel implements BaseControl, Trai
     @Override
     public void createTrainingProject(String projectName, File projectFolder) {
         initCreateTraining();
+        this.revalidate();
+        this.repaint();
     }
 
 

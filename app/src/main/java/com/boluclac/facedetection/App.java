@@ -1,7 +1,7 @@
 package com.boluclac.facedetection;
 
-import com.boluclac.facedetection.gui.events.face.MainFrameEvent;
-import com.boluclac.facedetection.gui.frames.face.MainFrame;
+import com.boluclac.facedetection.gui.events.MainFrameEvent;
+import com.boluclac.facedetection.gui.frames.MainFrame;
 
 /**
  * <h1>Application launcher</h1>

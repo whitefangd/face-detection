@@ -1,4 +1,4 @@
-package com.boluclac.facedetection.gui.controls.face;
+package com.boluclac.facedetection.gui.controls;
 
 import javax.swing.*;
 import java.awt.*;

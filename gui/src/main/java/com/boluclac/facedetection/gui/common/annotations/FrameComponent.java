@@ -1,4 +1,4 @@
-package com.boluclac.facedetection.annotations;
+package com.boluclac.facedetection.gui.common.annotations;
 
 import org.springframework.core.annotation.AliasFor;
 import org.springframework.stereotype.Component;

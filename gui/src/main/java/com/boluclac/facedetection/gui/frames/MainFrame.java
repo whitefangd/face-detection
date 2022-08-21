@@ -1,6 +1,6 @@
-package com.boluclac.facedetection.gui.frames.face;
+package com.boluclac.facedetection.gui.frames;
 
-import com.boluclac.facedetection.gui.events.face.MainFrameEvent;
+import com.boluclac.facedetection.gui.events.MainFrameEvent;
 
 /**
  * <h1>Main Frame Interface</h1>

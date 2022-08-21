@@ -1,4 +1,4 @@
-package com.boluclac.facedetection.gui.controls.face;
+package com.boluclac.facedetection.gui.controls;
 
 import com.boluclac.facedetection.gui.exceptions.ValidationExceptions;
 

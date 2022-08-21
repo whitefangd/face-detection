@@ -1,8 +1,8 @@
-package com.boluclac.facedetection.gui.controls.face;
+package com.boluclac.facedetection.gui.controls;
 
-import com.boluclac.facedetection.gui.events.face.MenuActionEvent;
+import com.boluclac.facedetection.gui.events.MenuActionEvent;
 
-import javax.swing.JMenuBar;
+import javax.swing.*;
 
 /**
  * <h1>Main Menu control Interface</h1>

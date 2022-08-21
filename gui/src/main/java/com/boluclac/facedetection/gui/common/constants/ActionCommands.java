@@ -1,4 +1,4 @@
-package com.boluclac.facedetection.gui.events;
+package com.boluclac.facedetection.gui.common.constants;
 
 /**
  * <h1>Action command keys</h1>

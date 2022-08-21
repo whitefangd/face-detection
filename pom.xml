@@ -23,9 +23,9 @@
     </properties>
 
     <modules>
+        <module>core</module>
         <module>gui</module>
         <module>app</module>
-        <module>core</module>
     </modules>
 
     <dependencies>

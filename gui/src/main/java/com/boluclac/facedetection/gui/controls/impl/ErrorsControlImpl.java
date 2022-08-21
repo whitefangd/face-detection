@@ -1,15 +1,13 @@
 package com.boluclac.facedetection.gui.controls.impl;
 
 import com.boluclac.facedetection.common.beans.MessageSourceCommon;
+import com.boluclac.facedetection.gui.common.annotations.ControlComponent;
 import com.boluclac.facedetection.gui.common.constants.MessageGUIConstant;
-import com.boluclac.facedetection.gui.controls.face.BaseControl;
-import com.boluclac.facedetection.gui.controls.face.ErrorsControl;
+import com.boluclac.facedetection.gui.controls.BaseControl;
+import com.boluclac.facedetection.gui.controls.ErrorsControl;
 import com.boluclac.facedetection.gui.exceptions.ValidationExceptions;
 import com.boluclac.facedetection.utils.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.config.ConfigurableBeanFactory;
-import org.springframework.context.annotation.Scope;
-import org.springframework.stereotype.Component;
 
 import javax.annotation.PostConstruct;
 import javax.swing.*;
@@ -28,8 +26,7 @@ import java.util.Locale;
  * @author boluclac
  * @version 0.0.0
  */
-@Component
-@Scope(ConfigurableBeanFactory.SCOPE_PROTOTYPE)
+@ControlComponent
 public class ErrorsControlImpl extends JPanel implements BaseControl, ErrorsControl {
 
     /** Message Source Common */

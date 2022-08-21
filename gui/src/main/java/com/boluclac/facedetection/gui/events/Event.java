@@ -1,4 +1,4 @@
-package com.boluclac.facedetection.gui.events.face;
+package com.boluclac.facedetection.gui.events;
 
 /**
  * <h1>Event Interface</h1>

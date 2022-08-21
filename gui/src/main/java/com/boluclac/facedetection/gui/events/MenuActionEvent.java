@@ -1,7 +1,7 @@
-package com.boluclac.facedetection.gui.events.face;
+package com.boluclac.facedetection.gui.events;
 
-import com.boluclac.facedetection.gui.controls.face.MainMenuControl;
-import com.boluclac.facedetection.gui.controls.impl.MainMenuControlImpl;
+
+import com.boluclac.facedetection.gui.controls.MainMenuControl;
 
 /**
  * <h1>Event Interface: Menu action event</h1>

@@ -1,15 +1,15 @@
 package com.boluclac.facedetection.gui.frames.impl;
 
 import com.boluclac.facedetection.ConfigurationCore;
-import com.boluclac.facedetection.annotations.FrameComponent;
 import com.boluclac.facedetection.common.beans.MessageSourceCommon;
-import com.boluclac.facedetection.gui.controls.face.MainMenuControl;
-import com.boluclac.facedetection.gui.controls.face.TrainingPageControl;
-import com.boluclac.facedetection.gui.events.ActionCommands;
-import com.boluclac.facedetection.gui.events.face.MainFrameEvent;
-import com.boluclac.facedetection.gui.events.face.MenuActionEvent;
-import com.boluclac.facedetection.gui.events.face.TrainingPageEvent;
-import com.boluclac.facedetection.gui.frames.face.MainFrame;
+import com.boluclac.facedetection.gui.common.annotations.FrameComponent;
+import com.boluclac.facedetection.gui.common.constants.ActionCommands;
+import com.boluclac.facedetection.gui.controls.MainMenuControl;
+import com.boluclac.facedetection.gui.controls.TrainingPageControl;
+import com.boluclac.facedetection.gui.events.MainFrameEvent;
+import com.boluclac.facedetection.gui.events.MenuActionEvent;
+import com.boluclac.facedetection.gui.events.TrainingPageEvent;
+import com.boluclac.facedetection.gui.frames.MainFrame;
 import org.springframework.beans.factory.annotation.Autowired;
 
 import javax.swing.*;

@@ -1,6 +1,6 @@
-package com.boluclac.facedetection.gui.controls.face;
+package com.boluclac.facedetection.gui.controls;
 
-import com.boluclac.facedetection.gui.events.face.TrainingPageCreateEvent;
+import com.boluclac.facedetection.gui.events.TrainingPageCreateEvent;
 
 import javax.swing.JDialog;
 

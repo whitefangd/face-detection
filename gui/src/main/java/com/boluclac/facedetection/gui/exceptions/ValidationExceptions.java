@@ -4,10 +4,10 @@ import com.boluclac.facedetection.ConfigurationCore;
 import com.boluclac.facedetection.common.beans.MessageSourceCommon;
 import com.boluclac.facedetection.utils.StringUtils;
 
+import javax.xml.parsers.ParserConfigurationException;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
-import java.util.Map;
 
 /**
  * <h1>Validation errors</h1>
@@ -16,6 +16,25 @@ import java.util.Map;
 public class ValidationExceptions extends RuntimeException {
     /** Error lists */
     private final List<List<String>> errors = new ArrayList<>();
+
+    /**
+     * Constructor with throwable
+     */
+    public ValidationExceptions() {
+        super();
+    }
+
+    /**
+     * Constructor with throwable
+     *
+     * @param exception throwable
+     */
+    public ValidationExceptions(Exception exception) {
+        super(exception);
+        List<String> error = new ArrayList<>();
+        error.add(exception.getMessage());
+        errors.add(error);
+    }
 
     /**
      * Add new error in list
@@ -32,6 +51,11 @@ public class ValidationExceptions extends RuntimeException {
         errors.add(error);
     }
 
+    /**
+     * Get list message text error.
+     *
+     * @return list message text error.
+     */
     public List<String> getMessageErrors() {
         MessageSourceCommon messageSourceCommon = ConfigurationCore.getBean(MessageSourceCommon.class);
         assert messageSourceCommon != null;

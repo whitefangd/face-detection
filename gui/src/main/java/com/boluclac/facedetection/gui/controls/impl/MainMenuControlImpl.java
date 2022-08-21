@@ -1,12 +1,13 @@
 package com.boluclac.facedetection.gui.controls.impl;
 
 import com.boluclac.facedetection.common.beans.MessageSourceCommon;
+import com.boluclac.facedetection.gui.common.annotations.ControlComponent;
+import com.boluclac.facedetection.gui.common.constants.ActionCommands;
 import com.boluclac.facedetection.gui.common.constants.MessageGUIConstant;
+import com.boluclac.facedetection.gui.controls.BaseControl;
 import com.boluclac.facedetection.gui.controls.JLanguageMenuItem;
-import com.boluclac.facedetection.gui.controls.face.BaseControl;
-import com.boluclac.facedetection.gui.controls.face.MainMenuControl;
-import com.boluclac.facedetection.gui.events.ActionCommands;
-import com.boluclac.facedetection.gui.events.face.MenuActionEvent;
+import com.boluclac.facedetection.gui.controls.MainMenuControl;
+import com.boluclac.facedetection.gui.events.MenuActionEvent;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.config.ConfigurableBeanFactory;
 import org.springframework.context.annotation.Scope;
@@ -29,8 +30,7 @@ import java.util.Locale;
  * @author boluclac
  * @version 0.0.0
  */
-@Component
-@Scope(ConfigurableBeanFactory.SCOPE_PROTOTYPE)
+@ControlComponent
 public class MainMenuControlImpl extends JMenuBar implements BaseControl, MainMenuControl, ActionListener {
 
     /** Message Source Common */

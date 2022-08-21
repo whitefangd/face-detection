@@ -1,6 +1,6 @@
-package com.boluclac.facedetection.gui.events.face;
+package com.boluclac.facedetection.gui.events;
 
-import com.boluclac.facedetection.gui.controls.face.TrainingPageCreatePopup;
+import com.boluclac.facedetection.gui.controls.TrainingPageCreatePopup;
 
 import java.io.File;
 

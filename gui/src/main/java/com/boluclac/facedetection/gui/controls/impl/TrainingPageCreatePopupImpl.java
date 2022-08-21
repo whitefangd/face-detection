@@ -2,20 +2,19 @@ package com.boluclac.facedetection.gui.controls.impl;
 
 import com.boluclac.facedetection.ConfigurationCore;
 import com.boluclac.facedetection.common.beans.MessageSourceCommon;
+import com.boluclac.facedetection.gui.common.annotations.ControlComponent;
+import com.boluclac.facedetection.gui.common.constants.ActionCommands;
 import com.boluclac.facedetection.gui.common.constants.Constants;
 import com.boluclac.facedetection.gui.common.constants.MessageGUIConstant;
-import com.boluclac.facedetection.gui.controls.face.BaseControl;
-import com.boluclac.facedetection.gui.controls.face.ErrorsControl;
-import com.boluclac.facedetection.gui.controls.face.TrainingPageCreatePopup;
-import com.boluclac.facedetection.gui.events.ActionCommands;
-import com.boluclac.facedetection.gui.events.face.TrainingPageCreateEvent;
+import com.boluclac.facedetection.gui.controls.BaseControl;
+import com.boluclac.facedetection.gui.controls.ErrorsControl;
+import com.boluclac.facedetection.gui.controls.TrainingPageCreatePopup;
+import com.boluclac.facedetection.gui.events.TrainingPageCreateEvent;
 import com.boluclac.facedetection.gui.exceptions.ValidationExceptions;
+import com.boluclac.facedetection.gui.facades.TrainingFaceDetectionFacade;
 import com.boluclac.facedetection.utils.LogUtils;
 import com.boluclac.facedetection.utils.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.config.ConfigurableBeanFactory;
-import org.springframework.context.annotation.Scope;
-import org.springframework.stereotype.Component;
 
 import javax.annotation.PostConstruct;
 import javax.swing.*;
@@ -42,18 +41,17 @@ import java.util.Locale;
  * @author boluclac
  * @version 0.0.0
  */
-@Component
-@Scope(ConfigurableBeanFactory.SCOPE_PROTOTYPE)
+@ControlComponent
 public class TrainingPageCreatePopupImpl extends JDialog implements BaseControl, TrainingPageCreatePopup, ActionListener {
 
     /** Message Source Common */
     @Autowired
     private MessageSourceCommon messageSourceCommon;
+    /** Main facade */
+    @Autowired
+    private TrainingFaceDetectionFacade trainingFaceDetectionFacade;
 
     private final List<TrainingPageCreateEvent> events = new ArrayList<>();
-
-    /** project folder */
-    private File projectFolder = null;
 
     /** Frame content */
     private final Window contentFrame;
@@ -203,7 +201,6 @@ public class TrainingPageCreatePopupImpl extends JDialog implements BaseControl,
         this.chooserFolder.setColumns(50);
         this.chooserFolder.setBorder(new CompoundBorder(new LineBorder(Color.GRAY),
                 BorderFactory.createEmptyBorder(4, 4, 4, 4)));
-        this.chooserFolder.setEditable(false);
         jPanelChoose.add(this.chooserFolder, constraints);
         constraints.gridx = 2;
         constraints.gridy = 1;
@@ -299,18 +296,25 @@ public class TrainingPageCreatePopupImpl extends JDialog implements BaseControl,
         this.errorsControl.clear();
         try {
             checkCreateValidate();
+            String projectName = this.txtName.getText();
+            File projectFolder = new File(this.chooserFolder.getText());
+            if (!projectFolder.exists() && !projectFolder.mkdirs()) {
+                throw new ValidationExceptions();
+            }
             if (projectFolder.isDirectory()) {
                 Path path = Paths.get(projectFolder.getPath(), Constants.PROJECT_TRAINING_FILE_NAME);
                 File projectFile = path.toFile();
                 if (!projectFile.exists()) {
-                    assert projectFile.createNewFile();
+                    if (!projectFile.createNewFile()) {
+                        throw new ValidationExceptions();
+                    }
                 } else if (projectFile.isDirectory()) {
                     throw new ValidationExceptions();
                 }
-
+                trainingFaceDetectionFacade.createTrainingProject(projectName, projectFolder, projectFile);
             }
             for (TrainingPageCreateEvent event : events) {
-                event.createTrainingProject(this.txtName.getText(), this.projectFolder);
+                event.createTrainingProject(projectName, projectFolder);
             }
             dispose();
         } catch (ValidationExceptions validations) {
@@ -333,7 +337,7 @@ public class TrainingPageCreatePopupImpl extends JDialog implements BaseControl,
             exceptions.addError(MessageGUIConstant.ERRORS.ERR_10000001, MessageGUIConstant.TRAINNG_PROJECT_NAME);
             errorFlag = true;
         }
-        if (projectFolder == null || StringUtils.isNullOrEMpty(this.chooserFolder.getText())) {
+        if (StringUtils.isNullOrEMpty(this.chooserFolder.getText())) {
             exceptions.addError(MessageGUIConstant.ERRORS.ERR_10000001, MessageGUIConstant.TRAINNG_PROJECT_FOLDER);
             errorFlag = true;
         }
@@ -363,8 +367,8 @@ public class TrainingPageCreatePopupImpl extends JDialog implements BaseControl,
         jFileChooser.setFileSelectionMode(JFileChooser.DIRECTORIES_ONLY);
         int resultChoose = jFileChooser.showOpenDialog(this);
         if (resultChoose == JFileChooser.APPROVE_OPTION) {
-            projectFolder = jFileChooser.getSelectedFile();
-            this.chooserFolder.setText(projectFolder.getName());
+            File projectFolder = jFileChooser.getSelectedFile();
+            this.chooserFolder.setText(projectFolder.getPath());
         }
     }
 
